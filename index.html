@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PASKO Bingo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;}
+
+
+  table {
+    border-collapse: collapse;
+
+    width: 100%;
+    max-width: 400px;
+  }
+
+  th, td {
+    border: none;
+border-radius:20%;
+    width: 20%;
+    height: 60px;
+    font-size: 20px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+  }
+td{background-color:pink;}
+
+button {border-radius:20%;
+background-color:red; color:yellow;
+font-weight:600;}
+  th {
+    background: #d32f2f;
+    color: white;
+    font-size: 24px;
+  }
+
+  td.active {
+    background-color: cyan;
+  }
+
+  button {
+    padding: 10px 20px;    font-size: 16px;
+
+  }
+</style>
+</head>
+<body style="background-image:url(https://cf.ltkcdn.net/christmas/images/orig/274931-2131x1407-christmas-ornament.jpg);
+background-size:100% 100%;">
+
+<h2 style="color:yellow;text-shadow:3px 2px red;font-size:100px;font-family:monotype corsiva;">PASKO sa ACN</h2>
+
+<button onclick="startGame()">Start</button>
+<button onclick="resetBoard()">Reset</button><br><br>
+<center>
+<table id="paskoTable" style="color:blue;font-weight:600;">
+  <tr>
+    <th>P</th>
+    <th>A</th>
+    <th>S</th>
+    <th>K</th>
+    <th>O</th>
+  </tr>
+  <!-- 5 rows -->
+  <tr></tr>
+  <tr></tr>
+  <tr></tr>
+  <tr></tr>
+  <tr></tr>
+</table><br><br>
+
+<script>
+  const table = document.getElementById("paskoTable");
+
+  // Create empty cells
+  for (let r = 1; r <= 5; r++) {
+    for (let c = 0; c < 5; c++) {
+      const cell = document.createElement("td");
+      cell.addEventListener("click", () => {
+        cell.classList.toggle("active");
+      });
+      table.rows[r].appendChild(cell);
+    }
+  }
+
+  function generateNumbers(min, max, count) {
+    const nums = [];
+    while (nums.length < count) {
+      const n = Math.floor(Math.random() * (max - min + 1)) + min;
+      if (!nums.includes(n)) nums.push(n);
+    }
+    return nums;
+  }
+
+  function startGame() {
+    const ranges = [
+      generateNumbers(1, 15, 5),
+      generateNumbers(16, 29, 5),
+      generateNumbers(30, 44, 5),
+      generateNumbers(45, 59, 5),
+      generateNumbers(60, 75, 5)
+    ];
+
+    for (let r = 1; r <= 5; r++) {
+      for (let c = 0; c < 5; c++) {
+        const cell = table.rows[r].cells[c];
+        cell.textContent = ranges[c][r - 1];
+        cell.classList.remove("active");
+      }
+    }
+  }
+
+  function resetBoard() {
+    for (let r = 1; r <= 5; r++) {
+      for (let c = 0; c < 5; c++) {
+        const cell = table.rows[r].cells[c];
+        cell.textContent = "";
+        cell.classList.remove("active");
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
